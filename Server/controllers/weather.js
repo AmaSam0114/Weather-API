@@ -1,12 +1,10 @@
 // controllers/weather.js
-const oracledb = require('oracledb');
+const Weather = require('../models/weather');
 
-async function getWeatherData(req, res) {
+async function getAllWeatherData(req, res) {
   try {
-    const connection = await oracledb.getConnection();
-    const result = await connection.execute('SELECT * FROM weather_data');
-    await connection.close();
-    res.json(result.rows);
+    const data = await Weather.getAllWeatherData();
+    res.json(data);
   } catch (error) {
     console.error('Error getting weather data:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -15,14 +13,9 @@ async function getWeatherData(req, res) {
 
 async function createWeatherData(req, res) {
   const { district, temperature, humidity, airPressure } = req.body;
+  const data = { district, temperature, humidity, airPressure };
   try {
-    const connection = await oracledb.getConnection();
-    await connection.execute(
-      `INSERT INTO weather_data (district, temperature, humidity, air_pressure) VALUES (:1, :2, :3, :4)`,
-      [district, temperature, humidity, airPressure]
-    );
-    await connection.commit();
-    await connection.close();
+    await Weather.createWeatherData(data);
     res.status(201).json({ message: 'Weather data added successfully' });
   } catch (error) {
     console.error('Error creating weather data:', error);
@@ -30,4 +23,4 @@ async function createWeatherData(req, res) {
   }
 }
 
-module.exports = { getWeatherData, createWeatherData };
+module.exports = { getAllWeatherData, createWeatherData };

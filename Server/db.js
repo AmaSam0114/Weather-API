@@ -6,7 +6,7 @@ dotenv.config();
 
 const { DB_USER, DB_PASSWORD, DB_CONNECT_STRING } = process.env;
 
-async function initialize() {
+async function initializeOracleDB() {
   try {
     await oracledb.createPool({
       user: DB_USER,
@@ -19,4 +19,4 @@ async function initialize() {
   }
 }
 
-module.exports.initialize = initialize;
+module.exports.initializeOracleDB = initializeOracleDB;

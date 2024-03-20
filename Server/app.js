@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const weatherRoutes = require('./routes/weather');
-const { initialize } = require('./db');
+const { initializeOracleDB, initializeMongoDB } = require('./db');
 
 const app = express();
 
@@ -19,7 +19,8 @@ const swaggerOptions = require('./swagger/swaggerConfig');
 const specs = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-// Initialize database
-initialize();
+// Initialize databases
+initializeOracleDB();
+//initializeMongoDB();
 
 module.exports = app;
