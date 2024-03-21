@@ -1,26 +1,19 @@
-// app.js
 const express = require('express');
-const bodyParser = require('body-parser');
 const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
-const weatherRoutes = require('./routes/weather');
-const { initializeOracleDB, initializeMongoDB } = require('./db');
+const swaggerDocument = require('./swagger.yaml');
+const authMiddleware = require('./utils/authMiddleware');
+const errorMiddleware = require('./utils/errorMiddleware');
+const weatherRoutes = require('./routes/weatherRoutes');
 
 const app = express();
 
-// Middleware
-app.use(bodyParser.json());
-
-// Routes
+app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use(authMiddleware); // Implement authentication middleware
 app.use('/api/weather', weatherRoutes);
+app.use(errorMiddleware); // Implement error handling middleware
 
-// Swagger setup
-const swaggerOptions = require('./swagger/swaggerConfig');
-const specs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-
-// Initialize databases
-initializeOracleDB();
-//initializeMongoDB();
-
-module.exports = app;
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
