@@ -1,12 +1,14 @@
 // db.js
 const oracledb = require('oracledb');
 const dotenv = require('dotenv');
+//const { Sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 dotenv.config();
 
 const { DB_USER, DB_PASSWORD, DB_CONNECT_STRING } = process.env;
 
-async function initializeOracleDB() {
+async function sequelize() {
   try {
     await oracledb.createPool({
       user: DB_USER,
@@ -19,4 +21,4 @@ async function initializeOracleDB() {
   }
 }
 
-module.exports.initializeOracleDB = initializeOracleDB;
+module.exports.sequelize = sequelize;

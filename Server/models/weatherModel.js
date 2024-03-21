@@ -1,12 +1,8 @@
-
-const oracledb = require('oracledb');
-
-const { DataTypes } = require('initializeOracleDB');
-const initializeOracleDB = require('../config/db');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/db');
 
 
-
-const WeatherData = initializeOracleDB.define('WeatherData', {
+const WeatherData = sequelize.define('WeatherData', {
   temperature: {
     type: DataTypes.FLOAT,
     allowNull: false,
@@ -35,7 +31,7 @@ const WeatherData = initializeOracleDB.define('WeatherData', {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  district_id: {
+  district: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
