@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
-
 const WeatherData = sequelize.define('WeatherData', {
   temperature: {
     type: DataTypes.FLOAT,

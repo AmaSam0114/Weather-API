@@ -1,24 +1,12 @@
-// db.js
-const oracledb = require('oracledb');
-const dotenv = require('dotenv');
-//const { Sequelize } = require('sequelize');
 const { Sequelize } = require('sequelize');
 
-dotenv.config();
+const sequelize = new Sequelize({
+  dialect: 'mysql', // or any other dialect you're using
+  host: 'localhost', // or your database host
+  port: '3000', // or your database port
+  username: 'system',
+  password: 'ama123',
+  database: 'weather api',
+});
 
-const { DB_USER, DB_PASSWORD, DB_CONNECT_STRING } = process.env;
-
-async function sequelize() {
-  try {
-    await oracledb.createPool({
-      user: DB_USER,
-      password: DB_PASSWORD,
-      connectString: DB_CONNECT_STRING,
-    });
-    console.log('OracleDB connection pool created successfully');
-  } catch (error) {
-    console.error('Error initializing database:', error);
-  }
-}
-
-module.exports.sequelize = sequelize;
+module.exports = sequelize;
