@@ -1,42 +1,36 @@
-// WeatherMap.js
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import WeatherCard from './WeatherCard';
-import WeatherData from '../models/WeatherData'; // Import the WeatherData model
+import { getWeatherData } from '../services/WeatherService';
 
-const WeatherMap = () => {
-  const [weatherDataList, setWeatherDataList] = useState([]);
+class WeatherMap extends React.Component {
+  state = {
+    weatherData: [],
+  };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  componentDidMount() {
+    this.fetchWeatherData();
+  }
 
-  const fetchData = async () => {
+  fetchWeatherData = async () => {
     try {
-      const response = await axios.get('YOUR_API_ENDPOINT_HERE');
-      const formattedData = response.data.map((item) => {
-        return new WeatherData(
-          item.id,
-          item.district,
-          item.temperature,
-          item.humidity,
-          item.airPressure
-        );
-      });
-      setWeatherDataList(formattedData);
+      const response = await getWeatherData();
+      this.setState({ weatherData: response.data });
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching weather data:', error);
     }
   };
 
-  return (
-    <div className="weather-map">
-      <h1>Real-time Weather Map</h1>
-      {weatherDataList.map((data) => (
-        <WeatherCard key={data.id} data={data} />
-      ))}
-    </div>
-  );
-};
+  render() {
+    const { weatherData } = this.state;
+
+    return (
+      <div className="weather-map">
+        {weatherData.map((data) => (
+          <WeatherCard key={data.id} data={data} />
+        ))}
+      </div>
+    );
+  }
+}
 
 export default WeatherMap;
