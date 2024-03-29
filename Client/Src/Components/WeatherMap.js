@@ -1,6 +1,6 @@
 import React from 'react';
 import WeatherCard from './WeatherCard';
-import { getWeatherData } from '../services/WeatherService';
+import  getWeatherData  from '../services/WeatherService';
 
 class WeatherMap extends React.Component {
   state = {

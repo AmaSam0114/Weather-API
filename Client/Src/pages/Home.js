@@ -1,5 +1,5 @@
 import React from 'react';
-import WeatherMap from '../components/WeatherMap';
+import WeatherMap from '../Components/WeatherMap';
 
 const Home = () => {
   return (
