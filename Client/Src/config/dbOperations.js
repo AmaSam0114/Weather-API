@@ -1,7 +1,7 @@
 // dbOperations.js
 
 const oracledb = require('oracledb');
-const dbConfig = require('../config/dbConfig');
+const dbConfig = require('./dbConfig');
 
 async function queryDatabase(sqlQuery, binds = [], options = {}) {
   let connection;

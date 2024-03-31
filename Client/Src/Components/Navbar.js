@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import search from '../assets/icons/search.png'
+import './navbar.css'
 
 const Navbar = () => {
   return (
-    <nav className="navbar">
+    <div className="navbar">
+      <a className='title'>Weather App</a>
       <ul>
         <li>
           <Link to="/">Home</Link>
@@ -12,7 +15,11 @@ const Navbar = () => {
           <Link to="/about">About</Link>
         </li>
       </ul>
-    </nav>
+      <div className='search-box'>
+<input type='text' placeholder='Search'/>
+<img src={search} alt='search' />
+      </div>
+    </div>
   );
 };
 
