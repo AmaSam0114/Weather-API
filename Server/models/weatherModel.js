@@ -2,6 +2,10 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
 const WeatherData = sequelize.define('WeatherData', {
+  district: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   temperature: {
     type: DataTypes.FLOAT,
     allowNull: false,
@@ -30,10 +34,7 @@ const WeatherData = sequelize.define('WeatherData', {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  district: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
+  
 });
 
 module.exports = WeatherData;

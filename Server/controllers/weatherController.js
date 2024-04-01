@@ -1,12 +1,40 @@
-const WeatherData = require('../models/weatherModel');
+ /**
+ * @swagger
+ * components:
+ *   schemas:
+ *     WeatherData:
+ *       type: object
+ *       properties:
+ *           district:
+ *           type: string
+ *           description: Name of the district
+ *         temperature:
+ *           type: number
+ *           description: Temperature in Celsius
+ *         humidity:
+ *           type: number
+ *           description: Humidity in percentage
+ *         airPressure:
+ *           type: number
+ *           description: Air pressure in hPa
+ *         timestamp:
+ *           type: string
+ *           format: date-time
+ *           description: Timestamp of the weather data
+ *        
+ */
+
+
+
 const WeatherService = require('../services/WeatherService');
+const WeatherData = require('../models/weatherModel');
 
 const createWeatherData = async (req, res) => {
   try {
-    const { temperature, humidity, airPressure, timestamp, district } = req.body;
-    
+    const { district, temperature, humidity, airPressure, timestamp } = req.body;
+
     // Validate input data
-    if (!temperature || !humidity || !airPressure || !timestamp || !district) {
+    if (!district || !temperature || !humidity || !airPressure || !timestamp) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
@@ -18,11 +46,11 @@ const createWeatherData = async (req, res) => {
 
     // Create new weather data entry
     const newData = await WeatherData.create({
+      district,
       temperature,
       humidity,
       airPressure,
       timestamp,
-      district,
     });
 
     res.status(201).json(newData);
@@ -34,7 +62,7 @@ const createWeatherData = async (req, res) => {
 
 const getWeatherData = async (req, res) => {
   try {
-    const data = await WeatherService.getWeatherData();
+    const data = await WeatherData.findAll();
     res.status(200).json(data);
   } catch (error) {
     console.error(error);
@@ -45,20 +73,20 @@ const getWeatherData = async (req, res) => {
 const updateWeatherData = async (req, res) => {
   try {
     const { id } = req.params;
-    const { temperature, humidity, airPressure, timestamp, district } = req.body;
+    const { district, temperature, humidity, airPressure, timestamp } = req.body;
 
     // Validate input data
-    if (!temperature || !humidity || !airPressure || !timestamp || !district) {
+    if (!district || !temperature || !humidity || !airPressure || !timestamp) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
     // Update weather data entry
     const updatedData = await WeatherData.update({
+      district,
       temperature,
       humidity,
       airPressure,
       timestamp,
-      district,
     }, { where: { id } });
 
     if (updatedData[0] === 0) {
