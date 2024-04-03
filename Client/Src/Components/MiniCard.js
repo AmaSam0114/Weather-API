@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './miniCard.css'
 import sun from '../assets/icons/sun.png';
 import cloud from '../assets/icons/cloud.png';
 import fog from '../assets/icons/fog.png';
@@ -8,25 +9,10 @@ import storm from '../assets/icons/storm.png';
 import wind from '../assets/icons/windy.png';
 
 const MiniCard = ({ timestamp, district }) => {
-  const [weatherData, setWeatherData] = useState(null);
+  
+  const [icon, setIcon] = useState()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/weather/${district}?timestamp=${timestamp}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch weather data');
-        }
-        const data = await response.json();
-        setWeatherData(data);
-      } catch (error) {
-        console.error(error);
-        // Handle error, show error message, etc.
-      }
-    };
-
-    fetchData();
-  }, [timestamp, district]);
+  
 
   const getWeatherIcon = (iconString) => {
     if (iconString) {
@@ -50,21 +36,16 @@ const MiniCard = ({ timestamp, district }) => {
   };
 
   return (
-    <div className='glassCard w-[10rem] h-[10rem] p-4 flex flex-col'>
-      {weatherData ? (
-        <>
-          <p className='text-center'>
-            {new Date(timestamp).toLocaleTimeString('en', { weekday: 'long' }).split(" ")[0]}
-          </p>
-          <hr />
+    <div className='card'>
+      
+          <h3>colombo</h3>
+          <p>Temperature: 30 °C</p>
+          <p>Humidity: 20%</p>
+          <p>Air Pressure: 200 Pa</p>
           <div className='w-full flex justify-center items-center flex-1'>
-            <img src={getWeatherIcon(weatherData.icon)} alt="forecast not available" className='w-[4rem] h-[4rem]' />
+          <img src={icon} alt="forecast not available" className='w-[4rem] h-[4rem]' />
           </div>
-          <p className='text-center font-bold'>{weatherData.temperature}&deg;C</p>
-        </>
-      ) : (
-        <p className='text-center'>Loading...</p>
-      )}
+       
     </div>
   );
 };

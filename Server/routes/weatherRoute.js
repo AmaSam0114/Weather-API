@@ -19,7 +19,7 @@ const WeatherController = require('../controllers/weatherController');
  *               items:
  *                 $ref: '#/components/schemas/WeatherData'
  */
-router.get('/weather/getData', WeatherController.getWeatherData);
+router.get('/getData', WeatherController.getWeatherData);
 
 /**
  * @swagger
@@ -41,9 +41,7 @@ router.get('/weather/getData', WeatherController.getWeatherData);
  *                 type: number
  *               airPressure:
  *                 type: number
- *               timestamp:
- *                 type: string
- *                 format: date-time
+ *               
  *               
  *     responses:
  *       '201':
@@ -55,7 +53,7 @@ router.get('/weather/getData', WeatherController.getWeatherData);
  *       '500':
  *         description: Internal server error
  */
-router.post('/weather/createData', WeatherController.createWeatherData);
+router.post('/createData', WeatherController.createWeatherData);
 
 /**
  * @swagger
@@ -76,6 +74,8 @@ router.post('/weather/createData', WeatherController.createWeatherData);
  *           schema:
  *             type: object
  *             properties:
+ *               district:
+ *                 type: string
  *               temperature:
  *                 type: number
  *               humidity:
@@ -83,10 +83,9 @@ router.post('/weather/createData', WeatherController.createWeatherData);
  *               airPressure:
  *                 type: number
  *               timestamp:
- *                 type: string
+ *                 type: TIMESTAMP
  *                 format: date-time
- *               district:
- *                 type: string
+ *               
  *     responses:
  *       '200':
  *         description: Weather data updated successfully
@@ -97,7 +96,7 @@ router.post('/weather/createData', WeatherController.createWeatherData);
  *       '500':
  *         description: Internal server error
  */
-router.put('/weather/update/:id', WeatherController.updateWeatherData);
+router.put('/update/:id', WeatherController.updateWeatherData);
 
 /**
  * @swagger
@@ -119,6 +118,6 @@ router.put('/weather/update/:id', WeatherController.updateWeatherData);
  *       '500':
  *         description: Internal server error
  */
-router.delete('/weather/delete/:id', WeatherController.deleteWeatherData);
+router.delete('/delete/:id', WeatherController.deleteWeatherData);
 
 module.exports = router;

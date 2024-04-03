@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #fff;
+    background: transparent;
     padding: 15px 7%;
 }
 .title{

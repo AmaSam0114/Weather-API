@@ -1,12 +1,21 @@
-const { Sequelize } = require('sequelize');
+const oracledb = require('oracledb');
+require('dotenv').config(); // Load environment variables
 
-const sequelize = new Sequelize({
-  dialect: 'mysql', // or any other dialect you're using
-  host: 'localhost', // or your database host
-  port: '1521', // or your database port
-  username: 'system',
-  password: 'ama123',
-  database: 'weather api',
-});
+const dbConfig = {
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  connectString: process.env.DB_CONNECT_STRING,
+};
 
-module.exports = sequelize;
+async function initialize() {
+  try {
+    await oracledb.createPool(dbConfig);
+    console.log('Oracle Database connection created.');
+  } catch (err) {
+    console.error('Error initializing Oracle Database:', err);
+  }
+}
+
+initialize();
+
+module.exports = oracledb;
